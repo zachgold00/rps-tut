@@ -84,10 +84,14 @@ export const main = Reach.App(() => {
   Alice.only(() => {
     const wager = declassify(interact.wager);
     const deadline = declassify(interact.deadline);
+    const playHandA = 0;
+    const playHandB = 0;
+    const gHandA = 0;
+    const gHandB = 0;
   });
 
   // The first one to publish deploys the contract
-  Alice.publish(wager, deadline)
+  Alice.publish(wager, deadline, playHandA, playHandB, gHandA, gHandB)
     .pay(wager);
   commit();
 
@@ -136,13 +140,13 @@ export const main = Reach.App(() => {
       .timeout(relativeTime(deadline), () => closeTo(Bob, informTimeout));
     checkCommitment(commitAlice, saltAlice, handAlice);
 
-    outcome = winner(playHandA, playHandB, gHandA,gHandB);
+    outcome = winner(playHandA, playHandB, gHandA, gHandB);
     continue;
   }
 
-  assert(outcome == A_WINS || outcome == B_WINS);
-  transfer(2 * wager).to(outcome == A_WINS ? Alice : Bob);
-  commit();
+  // assert(outcome == A_WINS || outcome == B_WINS);
+  // //transfer(2 * wager).to(outcome == A_WINS ? Alice : Bob);
+  // commit();
 
   each([Alice, Bob], () => {
     interact.seeOutcome(outcome);

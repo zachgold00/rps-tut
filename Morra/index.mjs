@@ -51,7 +51,6 @@ interact.informTimeout = () => {
   process.exit(1);
 };
 
-
 const HAND = ['0','1', '2', '3', '4', '5'];
 const HANDS = {
   '0': 0,
@@ -106,10 +105,29 @@ interact.seeOutcome = async (outcome) => {
   console.log(`The outcome is: ${OUTCOME[outcome]}`);
 };
 
+interact.deadline = 5;
+interact.wager= 500;
+
+
 const part = isAlice ? ctc.p.Alice : ctc.p.Bob;
+console.log(part)
 await part(interact);
 
 const after = await getBalance();
 console.log(`Your balance is now ${after}`);
+
+// await Promise.all([
+//   backend.Alice(ctcAlice, {
+//     ...stdlib.hasRandom,
+//     wager: 500,
+//     deadline: 5
+
+
+//   }),
+//   backend.Bob(ctcBob, {
+//     ...stdlib.hasRandom
+
+//   }),
+// ]);
 
 ask.done();
