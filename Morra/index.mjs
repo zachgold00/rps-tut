@@ -115,15 +115,11 @@ interact.seeOutcome = async (outcome) => {
 interact.deadline = 100;
 interact.wager= 500;
 
-
-
-
 const part = isAlice ? ctc.p.Alice : ctc.p.Bob;
 console.log(part)
 await part(interact);
 
 const after = await getBalance();
 console.log(`Your balance is now ${after}`);
-
 
 ask.done();
