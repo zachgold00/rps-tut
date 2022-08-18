@@ -66,7 +66,7 @@ export const main = Reach.App(() => {
   });
 
   // participant interact interface
-  const Bob = Participant('bob', {
+  const Bob = Participant('Bob', {
     ...Player, // inherit all Player functions
     acceptWager: Fun([UInt], Null), // declare acceptWager method signature
   });

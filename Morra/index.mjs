@@ -44,7 +44,14 @@ const getBalance = async () => fmt(await stdlib.balanceOf(acc));
 const before = await getBalance();
 console.log(`Your balance is ${before}`);
 
+
+
 const interact = { ...stdlib.hasRandom };
+
+interact.acceptWager = async ( ) => {
+  const accept = ask.ask('Do you accept the wager?', ask.yesno);
+
+}
 
 interact.informTimeout = () => {
   console.log(`There was a timeout.`);
@@ -105,8 +112,10 @@ interact.seeOutcome = async (outcome) => {
   console.log(`The outcome is: ${OUTCOME[outcome]}`);
 };
 
-interact.deadline = 5;
+interact.deadline = 100;
 interact.wager= 500;
+
+
 
 
 const part = isAlice ? ctc.p.Alice : ctc.p.Bob;
@@ -116,18 +125,5 @@ await part(interact);
 const after = await getBalance();
 console.log(`Your balance is now ${after}`);
 
-// await Promise.all([
-//   backend.Alice(ctcAlice, {
-//     ...stdlib.hasRandom,
-//     wager: 500,
-//     deadline: 5
-
-
-//   }),
-//   backend.Bob(ctcBob, {
-//     ...stdlib.hasRandom
-
-//   }),
-// ]);
 
 ask.done();
