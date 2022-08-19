@@ -48,9 +48,8 @@ console.log(`Your balance is ${before}`);
 
 const interact = { ...stdlib.hasRandom };
 
-interact.acceptWager = async ( ) => {
-  const accept = ask.ask('Do you accept the wager?', ask.yesno);
-
+interact.acceptWager = async (funds) => {
+  const accept = ask.ask(`Do you accept the wager: ${fmt(funds)}?`, ask.yesno);
 }
 
 interact.informTimeout = () => {
@@ -69,19 +68,7 @@ const HANDS = {
 };
 
 const GUESS = ['0','1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
-const GUESSS = {
-  '0': 0,
-  '1': 1, 
-  '2': 2, 
-  '3': 3, 
-  '4': 4, 
-  '5': 5,
-  '6': 5,
-  '7': 7,
-  '8': 8,
-  '9': 9,
-  '10': 10 
-};
+
 
 interact.getHand = async () => {
   const hand = await ask.ask(`What hand will you play?`, (x) => {
@@ -97,29 +84,33 @@ interact.getHand = async () => {
 
 interact.getGuess = async () => {
   const hTotal = await ask.ask(`What do you think the total is 0-10?`, (x) => {
-    const hTotal = GUESSS[x];
-    if ( GUESS === undefined ) {
+    
+    if ( GUESS[x] === undefined ) {
       throw Error(`Not a valid guess ${GUESS}`);
     }
-    return GUESS;
+    return GUESS[x];
   });
-  console.log(`You played ${GUESSS[GUESS]}`);
-  return GUESS;
+  console.log(`You played ${GUESS[hTotal]}`);
+  return GUESS[hTotal];
 };
 
-const OUTCOME = ['Bob wins', 'Draw', 'Alice wins'];
+const OUTCOME = ['Alice wins', 'Draw', 'Bob wins'];
 interact.seeOutcome = async (outcome) => {
   console.log(`The outcome is: ${OUTCOME[outcome]}`);
 };
 
 interact.deadline = 100;
-interact.wager= 500;
+interact.wager = await stdlib.parseCurrency(40);
+
+
+
 
 const part = isAlice ? ctc.p.Alice : ctc.p.Bob;
-console.log(part)
+
 await part(interact);
 
 const after = await getBalance();
 console.log(`Your balance is now ${after}`);
+
 
 ask.done();
